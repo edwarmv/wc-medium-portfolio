@@ -1,10 +1,16 @@
 const path = require("path");
 
 module.exports = {
-  entry: "./src/main.js",
-  output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "main.js",
+  entry: "./src/main.ts",
+  mode: "production",
+  module: {
+    rules: [
+      {
+        test: /\.ts?$/,
+        use: "ts-loader",
+        exclude: /node_modules/,
+      },
+    ],
   },
   devServer: {
     static: {
@@ -12,5 +18,12 @@ module.exports = {
     },
     compress: true,
     port: 8080,
+  },
+  output: {
+    path: path.resolve(__dirname, "dist"),
+    filename: "main.js",
+  },
+  resolve: {
+    extensions: [".ts", ".js"],
   },
 };

@@ -1,8 +1,8 @@
-// @ts-check
-import { encodeObject, decodeObject } from "../services/helper.js";
-import "./medium-category-chips.js";
+import { encodeObject, decodeObject } from "../services/helper";
+import { Article } from "../services/medium-feed";
+import "./medium-category-chips";
 
-const styled = ({ thumbnail }) => `
+const styled = ({ thumbnail }: { thumbnail: string }) => `
 <style>
 :host {
     max-width: 100%;
@@ -151,7 +151,7 @@ medium-category-chips {
 
 class MediumArticleCardComponent extends HTMLElement {
   get article() {
-    return decodeObject(this.getAttribute("article"));
+    return decodeObject<Article>(this.getAttribute("article") ?? "{}");
   }
 
   constructor() {
@@ -161,7 +161,7 @@ class MediumArticleCardComponent extends HTMLElement {
   }
 
   render() {
-    this.shadowRoot.innerHTML = `
+    this.shadowRoot!.innerHTML = `
     ${styled({ thumbnail: this.article.thumbnail })}
     <article class="card card--1">
         <div class="card-img"></div>

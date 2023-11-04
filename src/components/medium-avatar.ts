@@ -1,5 +1,3 @@
-// @ts-check
-
 const css = `
 <style>
     .avatar {
@@ -9,9 +7,10 @@ const css = `
     }
 </style>
 `;
+
 class MediumAvatar extends HTMLElement {
   get image() {
-    return decodeURIComponent(this.getAttribute("image"));
+    return decodeURIComponent(this.getAttribute("image") ?? "{}");
   }
 
   constructor() {
@@ -21,7 +20,7 @@ class MediumAvatar extends HTMLElement {
   }
 
   render() {
-    this.shadowRoot.innerHTML = `
+    this.shadowRoot!.innerHTML = `
     ${css}
     <img class="avatar" src="${this.image}"></img>
     `;

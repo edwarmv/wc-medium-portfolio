@@ -1,11 +1,11 @@
-// @ts-check
-import { decodeObject } from "../services/helper.js";
-import "./medium-category-chip.js";
+import { decodeObject } from "../services/helper";
+import "./medium-category-chip";
 
 const css = ``;
+
 class MediumCategoryChips extends HTMLElement {
   get categories() {
-    return decodeObject(this.getAttribute("categories"));
+    return decodeObject<string[]>(this.getAttribute("categories") ?? "{}");
   }
 
   constructor() {
@@ -17,12 +17,13 @@ class MediumCategoryChips extends HTMLElement {
   connectedCallback() {}
 
   render() {
-    this.shadowRoot.innerHTML = `
+    this.shadowRoot!.innerHTML = `
     ${css}
     <div class="chips">
     ${this.categories
       .map(
-        (category) => `<medium-category-chip>${category}</medium-category-chip>`
+        (category) =>
+          `<medium-category-chip>${category}</medium-category-chip>`,
       )
       .join("")}       
     </div>

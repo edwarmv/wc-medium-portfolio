@@ -36,7 +36,7 @@ class MediumCategoryChip extends HTMLElement {
   }
 
   render() {
-    this.shadowRoot.appendChild(template.content.cloneNode(true));
+    this.shadowRoot!.appendChild(template.content.cloneNode(true));
   }
 }
 

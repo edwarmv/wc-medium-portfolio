@@ -1,5 +1,4 @@
-import "./medium-avatar.js";
-// @ts-check
+import "./medium-avatar";
 
 const css = `
 <style>
@@ -19,7 +18,7 @@ medium-avatar {
 `;
 
 class MediumHeader extends HTMLElement {
-  get title() {
+  get headertitle() {
     return this.getAttribute("title");
   }
   get image() {
@@ -33,10 +32,10 @@ class MediumHeader extends HTMLElement {
   }
 
   render() {
-    this.shadowRoot.innerHTML = `
+    this.shadowRoot!.innerHTML = `
     ${css}
     <div class="header">
-      <h1>${this.title}</h1>
+      <h1>${this.headertitle}</h1>
       <medium-avatar image=${this.image}></medium-avatar>
     </div>
     `;
