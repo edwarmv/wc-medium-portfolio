@@ -1,31 +1,31 @@
-const css = `
-<style>
-    .avatar {
-        width: 50px;
-        border-radius: 50%;
-        box-shadow: 0px 13px 10px -7px rgb(0 0 0 / 10%);
-    }
-</style>
+import { LitElement, css, html } from "lit";
+import { customElement, property } from "lit/decorators.js";
+import { sharedStyles } from "../shared/style";
+
+const componentStyle = css`
+  .avatar {
+    width: 50px;
+    border-radius: 50%;
+    box-shadow: 0px 13px 10px -7px rgb(0 0 0 / 10%);
+  }
 `;
 
-class MediumAvatar extends HTMLElement {
-  get image() {
-    return decodeURIComponent(this.getAttribute("image") ?? "{}");
-  }
+@customElement("medium-avatar")
+class MediumAvatar extends LitElement {
+  static styles = [sharedStyles, componentStyle];
 
-  constructor() {
-    super();
-    this.attachShadow({ mode: "open" });
-    this.render();
-  }
+  @property()
+  image!: string;
 
   render() {
-    this.shadowRoot!.innerHTML = `
-    ${css}
+    return html`
     <img class="avatar" src="${this.image}"></img>
     `;
   }
 }
 
-customElements.define("medium-avatar", MediumAvatar);
-export {};
+declare global {
+  interface HTMLElementTagNameMap {
+    "medium-avatar": MediumAvatar;
+  }
+}

@@ -1,45 +1,38 @@
+import { customElement, property } from "lit/decorators.js";
 import "./medium-avatar";
+import { css, html, LitElement } from "lit";
 
-const css = `
-<style>
-.header {
-  display: flex;
-  align-items: center;
-  margin: 10px;
-}
-h1 {
-  font-weight: 300;
-}
+const componentStyle = css`
+  .header {
+    display: flex;
+    align-items: center;
+    margin: 10px;
+  }
+  h1 {
+    font-weight: 300;
+  }
 
-medium-avatar {
-  margin-left: 15px;
-}
-</style>
+  medium-avatar {
+    margin-left: 15px;
+  }
 `;
 
-class MediumHeader extends HTMLElement {
-  get headertitle() {
-    return this.getAttribute("title");
-  }
-  get image() {
-    return this.getAttribute("image");
-  }
+@customElement("medium-header")
+class MediumHeader extends LitElement {
+  static style = componentStyle;
 
-  constructor() {
-    super();
-    this.attachShadow({ mode: "open" });
-    this.render();
-  }
+  @property()
+  headertitle!: string;
+
+  @property()
+  image!: string;
 
   render() {
-    this.shadowRoot!.innerHTML = `
-    ${css}
-    <div class="header">
-      <h1>${this.headertitle}</h1>
-      <medium-avatar image=${this.image}></medium-avatar>
-    </div>
+    return html`
+      <div class="header">
+        <h1>${this.headertitle}</h1>
+        <medium-avatar image=${this.image}></medium-avatar>
+      </div>
     `;
   }
 }
-
-customElements.define("medium-header", MediumHeader);

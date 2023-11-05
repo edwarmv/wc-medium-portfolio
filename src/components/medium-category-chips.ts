@@ -1,34 +1,25 @@
+import { customElement, property } from "lit/decorators.js";
 import { decodeObject } from "../services/helper";
 import "./medium-category-chip";
+import { LitElement, css, html } from "lit";
 
-const css = ``;
+const componentStyle = css``;
 
-class MediumCategoryChips extends HTMLElement {
-  get categories() {
-    return decodeObject<string[]>(this.getAttribute("categories") ?? "{}");
-  }
+@customElement("medium-category-chips")
+class MediumCategoryChips extends LitElement {
+  static style = componentStyle;
 
-  constructor() {
-    super();
-    this.attachShadow({ mode: "open" });
-    this.render();
-  }
-
-  connectedCallback() {}
+  @property({ type: Array })
+  categories!: string[];
 
   render() {
-    this.shadowRoot!.innerHTML = `
-    ${css}
-    <div class="chips">
-    ${this.categories
-      .map(
-        (category) =>
-          `<medium-category-chip>${category}</medium-category-chip>`,
-      )
-      .join("")}       
-    </div>
+    return html`
+      <div class="chips">
+        ${this.categories.map(
+          (category) =>
+            html`<medium-category-chip>${category}</medium-category-chip>`,
+        )}
+      </div>
     `;
   }
 }
-
-customElements.define("medium-category-chips", MediumCategoryChips);

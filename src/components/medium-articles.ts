@@ -1,51 +1,33 @@
 import "./medium-article-card";
-import { encodeObject } from "../services/helper";
 import { Article } from "../services/medium-feed";
+import { customElement, property } from "lit/decorators.js";
+import { html, css, LitElement } from "lit";
 
-const css = `
-<style>
-.cards {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-</style>
+const componentStyle = css`
+  .cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 `;
 
-export class MediumArticlesComponent extends HTMLElement {
-  private _articles: Article[] = [];
+@customElement("medium-articles")
+export class MediumArticlesComponent extends LitElement {
+  @property({ type: Array })
+  articles: Article[] = [];
 
-  get articles() {
-    return this._articles || [];
-  }
-
-  set articles(articles) {
-    this._articles = articles;
-    this.render();
-  }
-
-  constructor() {
-    super();
-    this.attachShadow({ mode: "open" });
-  }
+  static styles = componentStyle;
 
   render() {
-    this.shadowRoot!.innerHTML = `
-    ${css}
-    <section class="cards">
-
-    ${this.articles
-      .map(
-        (article) =>
-          `<medium-article-card article=${encodeObject(
-            article,
-          )}></medium-article-card>`,
-      )
-      .join("")}
-    
-    </section>
+    return html`
+      <section class="cards">
+        ${this.articles.map(
+          (article) =>
+            html`<medium-article-card
+              .article=${article}
+            ></medium-article-card>`,
+        )}
+      </section>
     `;
   }
 }
-
-customElements.define("medium-articles", MediumArticlesComponent);
